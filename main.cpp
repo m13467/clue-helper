@@ -79,7 +79,7 @@ int main()
     while (isDone != 1) {
         inputLine = "";
         getline(std::cin, inputLine);
-        if (inputLine != "Done" && inputLine != "Done " && inputLine != "done" && inputLine != "done ") {
+        if (inputLine != "Done" && inputLine != "Done " && inputLine != "done" && inputLine != "done " && inputLine != "") {
             // 1 for they have it, 0 they don't have it, -1 for we don't know. 
             std::int16_t itemNum = stoi(inputLine);
             playerHand.push_back(itemNum);
@@ -112,7 +112,12 @@ int main()
             while (num < 3) {
                 inputLine = "";
                 getline(std::cin, inputLine);
-                items[num] = stoi(inputLine);
+                int tempNum = stoi(inputLine);
+                if (tempNum < 0 || tempNum > 20) {
+                    std::cout << "Invalid card number. Try again.\n";
+                    continue;
+                }
+                items[num] = tempNum;
                 num++;
             }
             std::cout << "Did you give the suggestion?\n";
@@ -181,13 +186,16 @@ int main()
                 std::cout << "Who gave a card? (Enter \"None\" if no one helped)\n";
                 inputLine = "";
                 getline(std::cin, inputLine);
-                // This is someon helping the other player's suggestion
+                // This is someone (including the player) helping the other player's suggestion
                 if (inputLine != "None" && inputLine != "none") {
                     int cardPlayer = 0;
                     for (; cardPlayer < players.size(); cardPlayer++) {
                         if (players[cardPlayer] == inputLine) {
                             break;
                         }
+                    }
+                    if (inputLine == "me" || inputLine == "Me") {
+                        cardPlayer = -1;
                     }
                     if (cardPlayer == players.size()) {
                         std::cout << "Could not find player. Try again.\n";
