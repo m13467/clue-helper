@@ -242,7 +242,6 @@ int main()
     }
 }
 
-
 // This function fills out the clue card with what the player has and initiallizes the unkown card rows
 int* transformToBasic(std::vector<std::int16_t> playerHand) {
     static int basic[21][6];
